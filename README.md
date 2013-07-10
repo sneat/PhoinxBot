@@ -7,3 +7,6 @@ If you want to add channels the bot should join, you can insert them into the da
 query += "INSERT INTO channels (name) ('YOURCHANNEL');";
 
 And replace YOURCHANNEL with the channel you want.
+
+
+Commands can be read here: http://www.phoinx.net/phoinxbot/
