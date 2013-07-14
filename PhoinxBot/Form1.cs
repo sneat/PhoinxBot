@@ -24,6 +24,8 @@ namespace PhoinxBot
             InitDBData();
             InitIRC();
             InitTabs();
+            AddChannel("ls_test");
+            FillCmdListTab();
         }
 
         //Create tables if new db
@@ -36,6 +38,19 @@ namespace PhoinxBot
                 query += "CREATE TABLE IF NOT EXISTS permits (user varchar(50), channel varchar(50));";
                 query += "CREATE TABLE IF NOT EXISTS blacklist (type int(1), text varchar(255), channel varchar(50));";
 
+                SQLiteCommand command = new SQLiteCommand(query, dbCon);
+                command.ExecuteNonQuery();
+                dbCon.Close();
+            }
+        }
+
+        private void AddChannel(string chan)
+        {
+            using (SQLiteConnection dbCon = new SQLiteConnection("Data Source=Database.sqlite;Version=3;"))
+            {
+                dbCon.Open();
+                //channel names are case sensitive.  Twitch uses lowercase
+                string query = "INSERT OR IGNORE INTO channels (name) values ('" + chan.ToLower() + "');";
                 SQLiteCommand command = new SQLiteCommand(query, dbCon);
                 command.ExecuteNonQuery();
                 dbCon.Close();
@@ -108,6 +123,14 @@ namespace PhoinxBot
 
         }
 
+        private void FillCmdListTab() {
+            string CmdListText = "Hi";
+            CmdListText += "";
+            //TextBoxCmdList.Text = CmdListText;
+        }
+
+        
+
         //Sends message
         private void btnSend_Click(object sender, EventArgs e)
         {
@@ -130,7 +153,8 @@ namespace PhoinxBot
             //Send message to channel
             if (tab == null)
             {
-                tab = this.tabs.TabPages[0];
+                //tab = this.tabs.TabPages[0];
+                tab = this.tabs.TabPages["main"];
                 query = (System.Windows.Forms.TextBox)tab.Controls[2];
             }
             else
@@ -140,13 +164,20 @@ namespace PhoinxBot
 
             if (tab.Name == "main") { tag = Properties.Settings.Default.Username; }
 
-            if (tag == Properties.Settings.Default.Username)
+            if (query.Text.StartsWith("!") && tab.Name != "main")
             {
-                bot.SendMessage(query.Text);
+                bot.ProcessCmds(query.Text, tag, bot.BotName());
             }
             else
             {
-                bot.SendMessage("PRIVMSG #" + tag + " :" + query.Text);
+                if (tag == Properties.Settings.Default.Username)
+                {
+                    bot.SendMessage(query.Text);
+                }
+                else
+                {
+                    bot.SendMessage("PRIVMSG #" + tag + " :" + query.Text);
+                }
             }
 
             query.Text = "";
@@ -199,5 +230,5 @@ namespace PhoinxBot
                 }
             }
         }
-    }
+   }
 }
