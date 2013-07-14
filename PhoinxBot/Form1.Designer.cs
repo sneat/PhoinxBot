@@ -28,13 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.main = new System.Windows.Forms.TabPage();
             this.btnSend = new System.Windows.Forms.Button();
             this.txtTerminal = new System.Windows.Forms.RichTextBox();
             this.fldQuery = new System.Windows.Forms.TextBox();
             this.tabs = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.TextBoxCmdList = new System.Windows.Forms.RichTextBox();
             this.main.SuspendLayout();
             this.tabs.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
             // main
@@ -80,12 +84,33 @@
             // 
             // tabs
             // 
+            this.tabs.Controls.Add(this.tabPage1);
             this.tabs.Controls.Add(this.main);
             this.tabs.Location = new System.Drawing.Point(12, 12);
             this.tabs.Name = "tabs";
             this.tabs.SelectedIndex = 0;
             this.tabs.Size = new System.Drawing.Size(749, 732);
             this.tabs.TabIndex = 0;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.TextBoxCmdList);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Size = new System.Drawing.Size(741, 706);
+            this.tabPage1.TabIndex = 1;
+            this.tabPage1.Text = "Command List";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // TextBoxCmdList
+            // 
+            this.TextBoxCmdList.BackColor = System.Drawing.SystemColors.Control;
+            this.TextBoxCmdList.Location = new System.Drawing.Point(7, 6);
+            this.TextBoxCmdList.Name = "TextBoxCmdList";
+            this.TextBoxCmdList.ReadOnly = true;
+            this.TextBoxCmdList.Size = new System.Drawing.Size(728, 697);
+            this.TextBoxCmdList.TabIndex = 2;
+            this.TextBoxCmdList.Text = resources.GetString("TextBoxCmdList.Text");
             // 
             // Form1
             // 
@@ -98,6 +123,7 @@
             this.main.ResumeLayout(false);
             this.main.PerformLayout();
             this.tabs.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -109,6 +135,8 @@
         private System.Windows.Forms.RichTextBox txtTerminal;
         private System.Windows.Forms.TextBox fldQuery;
         private System.Windows.Forms.TabControl tabs;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.RichTextBox TextBoxCmdList;
     }
 }
 

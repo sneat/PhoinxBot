@@ -25,6 +25,7 @@ namespace PhoinxBot
             InitIRC();
             InitTabs();
             AddChannel("ls_test");
+            FillCmdListTab();
         }
 
         //Create tables if new db
@@ -122,6 +123,14 @@ namespace PhoinxBot
 
         }
 
+        private void FillCmdListTab() {
+            string CmdListText = "Hi";
+            CmdListText += "";
+            //TextBoxCmdList.Text = CmdListText;
+        }
+
+        
+
         //Sends message
         private void btnSend_Click(object sender, EventArgs e)
         {
@@ -144,7 +153,8 @@ namespace PhoinxBot
             //Send message to channel
             if (tab == null)
             {
-                tab = this.tabs.TabPages[0];
+                //tab = this.tabs.TabPages[0];
+                tab = this.tabs.TabPages["main"];
                 query = (System.Windows.Forms.TextBox)tab.Controls[2];
             }
             else
@@ -154,13 +164,20 @@ namespace PhoinxBot
 
             if (tab.Name == "main") { tag = Properties.Settings.Default.Username; }
 
-            if (tag == Properties.Settings.Default.Username)
+            if (query.Text.StartsWith("!") && tab.Name != "main")
             {
-                bot.SendMessage(query.Text);
+                bot.ProcessCmds(query.Text, tag, bot.BotName());
             }
             else
             {
-                bot.SendMessage("PRIVMSG #" + tag + " :" + query.Text);
+                if (tag == Properties.Settings.Default.Username)
+                {
+                    bot.SendMessage(query.Text);
+                }
+                else
+                {
+                    bot.SendMessage("PRIVMSG #" + tag + " :" + query.Text);
+                }
             }
 
             query.Text = "";
@@ -213,5 +230,5 @@ namespace PhoinxBot
                 }
             }
         }
-    }
+   }
 }
