@@ -24,6 +24,7 @@ namespace PhoinxBot
             InitDBData();
             InitIRC();
             InitTabs();
+            JoinChannel("LS_Test");
         }
 
         //Create tables if new db
@@ -35,8 +36,19 @@ namespace PhoinxBot
                 query += "CREATE TABLE IF NOT EXISTS commands (command varchar(50), text varchar(255), channel varchar(50));";
                 query += "CREATE TABLE IF NOT EXISTS permits (user varchar(50), channel varchar(50));";
                 query += "CREATE TABLE IF NOT EXISTS blacklist (type int(1), text varchar(255), channel varchar(50));";
-                query += "INSERT OR IGNORE INTO channels (name) values ('ls_test');";
 
+                SQLiteCommand command = new SQLiteCommand(query, dbCon);
+                command.ExecuteNonQuery();
+                dbCon.Close();
+            }
+        }
+
+        private void JoinChannel(string chan)
+        {
+            using (SQLiteConnection dbCon = new SQLiteConnection("Data Source=Database.sqlite;Version=3;"))
+            {
+                dbCon.Open();
+                string query = "INSERT OR IGNORE INTO channels (name) values ('" + chan + "');";
                 SQLiteCommand command = new SQLiteCommand(query, dbCon);
                 command.ExecuteNonQuery();
                 dbCon.Close();

@@ -35,3 +35,6 @@ E:\GLADOS\Dropbox\PhoinxBot\PhoinxBot\obj\x86\Debug\PhoinxBot.Form1.resources
 E:\GLADOS\Dropbox\PhoinxBot\PhoinxBot\obj\x86\Debug\PhoinxBot.Properties.Resources.resources
 E:\GLADOS\Dropbox\PhoinxBot\PhoinxBot\obj\x86\Debug\GenerateResource.read.1.tlog
 E:\GLADOS\Dropbox\PhoinxBot\PhoinxBot\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\weby\Documents\GitHub\PhoinxBot\PhoinxBot\bin\Debug\PhoinxBot.exe.config
+C:\Users\weby\Documents\GitHub\PhoinxBot\PhoinxBot\obj\x86\Debug\PhoinxBot.exe
+C:\Users\weby\Documents\GitHub\PhoinxBot\PhoinxBot\obj\x86\Debug\PhoinxBot.pdb
