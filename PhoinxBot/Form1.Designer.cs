@@ -48,7 +48,7 @@
             this.main.Padding = new System.Windows.Forms.Padding(3);
             this.main.Size = new System.Drawing.Size(741, 706);
             this.main.TabIndex = 0;
-            this.main.Text = "Main";
+            this.main.Text = "irc.twitch.tv";
             // 
             // btnSend
             // 
@@ -94,7 +94,7 @@
             this.ClientSize = new System.Drawing.Size(776, 756);
             this.Controls.Add(this.tabs);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "PhoinxBot";
             this.main.ResumeLayout(false);
             this.main.PerformLayout();
             this.tabs.ResumeLayout(false);
