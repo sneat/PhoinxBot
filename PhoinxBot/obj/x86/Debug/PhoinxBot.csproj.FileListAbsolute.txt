@@ -38,3 +38,9 @@ E:\GLADOS\Dropbox\PhoinxBot\PhoinxBot\obj\x86\Debug\GenerateResource.write.1.tlo
 C:\Users\weby\Documents\GitHub\PhoinxBot\PhoinxBot\bin\Debug\PhoinxBot.exe.config
 C:\Users\weby\Documents\GitHub\PhoinxBot\PhoinxBot\obj\x86\Debug\PhoinxBot.exe
 C:\Users\weby\Documents\GitHub\PhoinxBot\PhoinxBot\obj\x86\Debug\PhoinxBot.pdb
+C:\Users\weby\Documents\GitHub\PhoinxBot\PhoinxBot\bin\Debug\PhoinxBot.exe
+C:\Users\weby\Documents\GitHub\PhoinxBot\PhoinxBot\bin\Debug\PhoinxBot.pdb
+C:\Users\weby\Documents\GitHub\PhoinxBot\PhoinxBot\bin\Debug\System.Data.SQLite.xml
+C:\Users\weby\Documents\GitHub\PhoinxBot\PhoinxBot\obj\x86\Debug\PhoinxBot.Form1.resources
+C:\Users\weby\Documents\GitHub\PhoinxBot\PhoinxBot\obj\x86\Debug\PhoinxBot.Properties.Resources.resources
+C:\Users\weby\Documents\GitHub\PhoinxBot\PhoinxBot\obj\x86\Debug\PhoinxBot.csproj.GenerateResource.Cache
