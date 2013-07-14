@@ -1,37 +1,5 @@
-C:\Users\Phoinx\Documents\VS Projects\PhoinxBot\PhoinxBot\PhoinxBot\bin\Debug\PhoinxBot.exe.config
-C:\Users\Phoinx\Documents\VS Projects\PhoinxBot\PhoinxBot\PhoinxBot\bin\Debug\PhoinxBot.exe
-C:\Users\Phoinx\Documents\VS Projects\PhoinxBot\PhoinxBot\PhoinxBot\bin\Debug\PhoinxBot.pdb
-C:\Users\Phoinx\Documents\VS Projects\PhoinxBot\PhoinxBot\PhoinxBot\bin\Debug\System.Data.SQLite.dll
-C:\Users\Phoinx\Documents\VS Projects\PhoinxBot\PhoinxBot\PhoinxBot\bin\Debug\System.Data.SQLite.Linq.dll
-C:\Users\Phoinx\Documents\VS Projects\PhoinxBot\PhoinxBot\PhoinxBot\bin\Debug\System.Data.SQLite.xml
-C:\Users\Phoinx\Documents\VS Projects\PhoinxBot\PhoinxBot\PhoinxBot\obj\x86\Debug\ResolveAssemblyReference.cache
-C:\Users\Phoinx\Documents\VS Projects\PhoinxBot\PhoinxBot\PhoinxBot\obj\x86\Debug\PhoinxBot.Form1.resources
-C:\Users\Phoinx\Documents\VS Projects\PhoinxBot\PhoinxBot\PhoinxBot\obj\x86\Debug\PhoinxBot.Properties.Resources.resources
-C:\Users\Phoinx\Documents\VS Projects\PhoinxBot\PhoinxBot\PhoinxBot\obj\x86\Debug\GenerateResource.read.1.tlog
-C:\Users\Phoinx\Documents\VS Projects\PhoinxBot\PhoinxBot\PhoinxBot\obj\x86\Debug\GenerateResource.write.1.tlog
-C:\Users\Phoinx\Documents\VS Projects\PhoinxBot\PhoinxBot\PhoinxBot\obj\x86\Debug\PhoinxBot.exe
-C:\Users\Phoinx\Documents\VS Projects\PhoinxBot\PhoinxBot\PhoinxBot\obj\x86\Debug\PhoinxBot.pdb
-C:\Users\Niels-Win\Dropbox\PhoinxBot\PhoinxBot\bin\Debug\PhoinxBot.exe.config
-C:\Users\Niels-Win\Dropbox\PhoinxBot\PhoinxBot\obj\x86\Debug\PhoinxBot.exe
-C:\Users\Niels-Win\Dropbox\PhoinxBot\PhoinxBot\obj\x86\Debug\PhoinxBot.pdb
-C:\Users\Niels-Win\Dropbox\PhoinxBot\PhoinxBot\bin\Debug\PhoinxBot.exe
-C:\Users\Niels-Win\Dropbox\PhoinxBot\PhoinxBot\bin\Debug\PhoinxBot.pdb
-C:\Users\Niels-Win\Dropbox\PhoinxBot\PhoinxBot\bin\Debug\System.Data.SQLite.xml
-C:\Users\Niels-Win\Dropbox\PhoinxBot\PhoinxBot\obj\x86\Debug\ResolveAssemblyReference.cache
-C:\Users\Niels-Win\Dropbox\PhoinxBot\PhoinxBot\obj\x86\Debug\PhoinxBot.Form1.resources
-C:\Users\Niels-Win\Dropbox\PhoinxBot\PhoinxBot\obj\x86\Debug\PhoinxBot.Properties.Resources.resources
-C:\Users\Niels-Win\Dropbox\PhoinxBot\PhoinxBot\obj\x86\Debug\GenerateResource.read.1.tlog
-C:\Users\Niels-Win\Dropbox\PhoinxBot\PhoinxBot\obj\x86\Debug\GenerateResource.write.1.tlog
-E:\GLADOS\Dropbox\PhoinxBot\PhoinxBot\bin\Debug\PhoinxBot.exe.config
-E:\GLADOS\Dropbox\PhoinxBot\PhoinxBot\obj\x86\Debug\PhoinxBot.exe
-E:\GLADOS\Dropbox\PhoinxBot\PhoinxBot\obj\x86\Debug\PhoinxBot.pdb
-E:\GLADOS\Dropbox\PhoinxBot\PhoinxBot\bin\Debug\PhoinxBot.exe
-E:\GLADOS\Dropbox\PhoinxBot\PhoinxBot\bin\Debug\PhoinxBot.pdb
-E:\GLADOS\Dropbox\PhoinxBot\PhoinxBot\bin\Debug\System.Data.SQLite.dll
-E:\GLADOS\Dropbox\PhoinxBot\PhoinxBot\bin\Debug\System.Data.SQLite.Linq.dll
-E:\GLADOS\Dropbox\PhoinxBot\PhoinxBot\bin\Debug\System.Data.SQLite.xml
-E:\GLADOS\Dropbox\PhoinxBot\PhoinxBot\obj\x86\Debug\ResolveAssemblyReference.cache
-E:\GLADOS\Dropbox\PhoinxBot\PhoinxBot\obj\x86\Debug\PhoinxBot.Form1.resources
-E:\GLADOS\Dropbox\PhoinxBot\PhoinxBot\obj\x86\Debug\PhoinxBot.Properties.Resources.resources
-E:\GLADOS\Dropbox\PhoinxBot\PhoinxBot\obj\x86\Debug\GenerateResource.read.1.tlog
-E:\GLADOS\Dropbox\PhoinxBot\PhoinxBot\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\weby\Documents\GitHub\PhoinxBot\PhoinxBot\bin\Debug\PhoinxBot.exe.config
+C:\Users\weby\Documents\GitHub\PhoinxBot\PhoinxBot\obj\x86\Debug\PhoinxBot.csprojResolveAssemblyReference.cache
+C:\Users\weby\Documents\GitHub\PhoinxBot\PhoinxBot\obj\x86\Debug\PhoinxBot.Form1.resources
+C:\Users\weby\Documents\GitHub\PhoinxBot\PhoinxBot\obj\x86\Debug\PhoinxBot.Properties.Resources.resources
+C:\Users\weby\Documents\GitHub\PhoinxBot\PhoinxBot\obj\x86\Debug\PhoinxBot.csproj.GenerateResource.Cache
