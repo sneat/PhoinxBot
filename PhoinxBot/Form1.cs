@@ -35,6 +35,7 @@ namespace PhoinxBot
                 query += "CREATE TABLE IF NOT EXISTS commands (command varchar(50), text varchar(255), channel varchar(50));";
                 query += "CREATE TABLE IF NOT EXISTS permits (user varchar(50), channel varchar(50));";
                 query += "CREATE TABLE IF NOT EXISTS blacklist (type int(1), text varchar(255), channel varchar(50));";
+                query += "INSERT OR IGNORE INTO channels (name) values ('ls_test');";
 
                 SQLiteCommand command = new SQLiteCommand(query, dbCon);
                 command.ExecuteNonQuery();
