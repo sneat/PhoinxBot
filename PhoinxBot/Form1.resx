@@ -125,7 +125,7 @@
 
 Operator commands
 Blacklist	Ban / timeout people writing certain strings
-!blist add &lt;time&gt; &lt;text&gt;	Adds a blacklist for xxx seconds.  The text must not have any spaces!
+!blist add timeout/ &lt;text&gt;	Adds a blacklist for xxx seconds.  The text must not have any spaces!
 !blist remove &lt;text&gt;	Removes a text from blacklist
 !blist show	Shows all the blacklisted texts</value>
   </data>
