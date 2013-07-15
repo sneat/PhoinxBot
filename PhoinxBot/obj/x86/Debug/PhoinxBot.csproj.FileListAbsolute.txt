@@ -44,3 +44,12 @@ C:\Users\weby\Documents\GitHub\PhoinxBot\PhoinxBot\obj\x86\Debug\PhoinxBot.Form1
 C:\Users\weby\Documents\GitHub\PhoinxBot\PhoinxBot\obj\x86\Debug\PhoinxBot.Properties.Resources.resources
 C:\Users\weby\Documents\GitHub\PhoinxBot\PhoinxBot\obj\x86\Debug\PhoinxBot.csproj.GenerateResource.Cache
 C:\Users\weby\Documents\GitHub\PhoinxBot\PhoinxBot\obj\x86\Debug\PhoinxBot.csprojResolveAssemblyReference.cache
+C:\Users\Bookmaker-1\Documents\GitHub\PhoinxBot\PhoinxBot\bin\Debug\PhoinxBot.exe.config
+C:\Users\Bookmaker-1\Documents\GitHub\PhoinxBot\PhoinxBot\obj\x86\Debug\PhoinxBot.exe
+C:\Users\Bookmaker-1\Documents\GitHub\PhoinxBot\PhoinxBot\obj\x86\Debug\PhoinxBot.pdb
+C:\Users\Bookmaker-1\Documents\GitHub\PhoinxBot\PhoinxBot\bin\Debug\PhoinxBot.exe
+C:\Users\Bookmaker-1\Documents\GitHub\PhoinxBot\PhoinxBot\bin\Debug\PhoinxBot.pdb
+C:\Users\Bookmaker-1\Documents\GitHub\PhoinxBot\PhoinxBot\obj\x86\Debug\PhoinxBot.csprojResolveAssemblyReference.cache
+C:\Users\Bookmaker-1\Documents\GitHub\PhoinxBot\PhoinxBot\obj\x86\Debug\PhoinxBot.Form1.resources
+C:\Users\Bookmaker-1\Documents\GitHub\PhoinxBot\PhoinxBot\obj\x86\Debug\PhoinxBot.Properties.Resources.resources
+C:\Users\Bookmaker-1\Documents\GitHub\PhoinxBot\PhoinxBot\obj\x86\Debug\PhoinxBot.csproj.GenerateResource.Cache

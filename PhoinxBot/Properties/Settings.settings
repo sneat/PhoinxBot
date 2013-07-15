@@ -2,11 +2,11 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="PhoinxBot.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="Username" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">PhoinxBot</Value>
+    <Setting Name="Username" Type="System.String" Scope="User">
+      <Value Profile="(Default)">YOUR TWITCH USERNAME</Value>
     </Setting>
-    <Setting Name="Password" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">123qweasd</Value>
+    <Setting Name="Password" Type="System.String" Scope="User">
+      <Value Profile="(Default)">YOUR TWITCH PASSWORD</Value>
     </Setting>
   </Settings>
 </SettingsFile>
