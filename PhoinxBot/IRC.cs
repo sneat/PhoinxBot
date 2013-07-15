@@ -507,10 +507,10 @@ namespace PhoinxBot
                                 SQLiteCommand cUpdate = new SQLiteCommand(qUpdate, dbCon);
                                 cUpdate.ExecuteNonQuery();
 
-                                blackList[_channel].Add(_btext, Convert.ToInt16(_btype));
+                                blackList['#'+_channel].Add(_btext, Convert.ToInt16(_btype));
 
                                 //SendMessage("PRIVMSG " + _channel + " :Blacklist for " + _btext + " added!");
-                                PrintToChat("Blacklist for " + _btext + " added!", _channel);
+                                PrintToChatTab("Blacklist for " + _btext + " added!", _channel);
                             }
                             else if (_xist && cmd[0] == "remove")
                             {
@@ -520,10 +520,10 @@ namespace PhoinxBot
                                 SQLiteCommand cUpdate = new SQLiteCommand(qUpdate, dbCon);
                                 cUpdate.ExecuteNonQuery();
 
-                                blackList[_channel].Remove(_btext);
+                                blackList['#'+_channel].Remove(_btext);
 
                                 //SendMessage("PRIVMSG " + _channel + " :Blacklist for " + _btext + " removed!");
-                                PrintToChat("Blacklist for " + _btext + " removed!", _channel);
+                                PrintToChatTab("Blacklist for " + _btext + " removed!", _channel);
                             }
                             dbCon.Close();
                         }
@@ -551,7 +551,7 @@ namespace PhoinxBot
 
                     // *todo* change this to a debug message
                     //SendMessage("PRIVMSG " + _channel + " :Blacklist is: " + blist);
-                    PrintToChat(" :Blacklist is: " + blist, _channel);
+                    PrintToChatTab("Blacklist is: " + blist, _channel);
 
                 }
             }
@@ -566,9 +566,10 @@ namespace PhoinxBot
                 string[] cmd = _message.Replace("!permit", "").TrimStart(' ').TrimEnd(' ').Split(' ');
                 Console.WriteLine(cmd.Length);
                 //List command doesn't work... throws exception
-                /*
                 if (cmd[0] == "list")
                 {
+                    PrintToChatTab("Command !permit list not implemented yet", _channel);
+                    /*
                     //Displays all permitted operators
                     string permitlist = "";
                     using (SQLiteConnection dbCon = new SQLiteConnection("Data Source=Database.sqlite;Version=3;"))
@@ -588,9 +589,9 @@ namespace PhoinxBot
 
                     //SendMessage("PRIVMSG " + _channel + " :Blacklist is: " + blist);
                     PrintToChat(" : OP List is: " + permitlist, _channel);
+                    */
                 }
-                */
-                        
+
                 if (cmd.Length == 2)
                 {
                     //Check if user exists as mod
@@ -604,7 +605,7 @@ namespace PhoinxBot
                         while (reader.Read() && _xist == false)
                         {
                             _xist = true;
-                            PrintToChat("User is OP: " + cmd[1], _channel);
+                            PrintToChatTab("User is currently OP: " + cmd[1], _channel);
                         }
 
                         //Either add or remove him
@@ -614,7 +615,7 @@ namespace PhoinxBot
 
                             SQLiteCommand cUpdate = new SQLiteCommand(qUpdate, dbCon);
                             cUpdate.ExecuteNonQuery();
-                            PrintToChat("User Deleted: " + cmd[1], _channel);
+                            PrintToChatTab("User Deleted: " + cmd[1], _channel);
                         }
                         else
                         {
@@ -626,7 +627,7 @@ namespace PhoinxBot
 
                                 SQLiteCommand cUpdate = new SQLiteCommand(qUpdate, dbCon);
                                 cUpdate.ExecuteNonQuery();
-                                PrintToChat("User Added: " + _username, _channel);
+                                PrintToChatTab("User Added: " + _username, _channel);
 
                             }
                         }
@@ -740,7 +741,7 @@ namespace PhoinxBot
         */ 
         }
 
-        private void PrintToChat(string _message, string _channel, string _nick = "*BOT_ECHO*")
+        public void PrintToChatTab(string _message, string _channel, string _nick = "*BOT_ECHO*")
         {
             Program.mainForm.AddLine(_channel, "<" + DateTime.Now.ToString("HH:mm:ss") + "> <" + _nick + "> " + _message);
         }
