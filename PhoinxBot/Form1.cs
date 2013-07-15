@@ -23,6 +23,12 @@ namespace PhoinxBot
             InitializeComponent();
             UsernameTextBox.Text = Properties.Settings.Default.Username;
             PasswordTextBox.Text = Properties.Settings.Default.Password;
+        }
+
+        private void ConnectIRCButton_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.Username = UsernameTextBox.Text;
+            Properties.Settings.Default.Password = PasswordTextBox.Text;
             InitDBData();
             InitIRC();
             InitTabs();
@@ -231,16 +237,6 @@ namespace PhoinxBot
                     ((System.Windows.Forms.RichTextBox)tab.Controls["terminal[" + name + "]"]).ScrollToCaret();
                 }
             }
-        }
-
-        private void UsernameTextBox_TextChanged(object sender, EventArgs e)
-        {
-            Properties.Settings.Default.Username = UsernameTextBox.Text;
-        }
-
-        private void PasswordTextBox_TextChanged(object sender, EventArgs e)
-        {
-            Properties.Settings.Default.Password = PasswordTextBox.Text;
         }
    }
 }
