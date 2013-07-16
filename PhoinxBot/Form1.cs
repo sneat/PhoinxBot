@@ -112,6 +112,12 @@ namespace PhoinxBot
                     t.Name = "query[" + name + "]";
                     t.Size = new System.Drawing.Size(648, 20);
                     t.TabIndex = 0;
+                    t.KeyDown += (s, e) => {
+                        if (e.KeyCode == Keys.Enter)
+                        {
+                            b.PerformClick();
+                        }
+                    };
 
                     //Terminal/console
                     r.Location = new System.Drawing.Point(7, 6);
@@ -247,7 +253,16 @@ namespace PhoinxBot
         {
             if (e.KeyCode == Keys.Enter)
             {
-                ConnectIRCButton_Click(new object(), new EventArgs());
+                ConnectIRCButton.PerformClick();
+            }
+        }
+
+        private void fldQuery_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                // The Send button on the irc.twitch.tv doesn't seem to work...not sure what sending commands to irc.twitch.tv channel is meant to do...
+                btnSend.PerformClick();
             }
         }
    }

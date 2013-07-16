@@ -85,6 +85,7 @@
             this.fldQuery.Name = "fldQuery";
             this.fldQuery.Size = new System.Drawing.Size(648, 20);
             this.fldQuery.TabIndex = 0;
+            this.fldQuery.KeyDown += new System.Windows.Forms.KeyEventHandler(this.fldQuery_KeyDown);
             // 
             // tabs
             // 
