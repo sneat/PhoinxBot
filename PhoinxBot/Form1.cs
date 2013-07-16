@@ -23,6 +23,7 @@ namespace PhoinxBot
             InitializeComponent();
             UsernameTextBox.Text = Properties.Settings.Default.Username;
             PasswordTextBox.Text = Properties.Settings.Default.Password;
+            TimeoutPeriodTextBox.Text = Properties.Settings.Default.TimeoutPeriod;
         }
 
         private void ConnectIRCButton_Click(object sender, EventArgs e)
@@ -34,7 +35,7 @@ namespace PhoinxBot
             InitDBData();
             InitIRC();
             InitTabs();
-            AddChannel("ls_test");
+            //AddChannel("your_channel_here");
             FillCmdListTab();
         }
 
@@ -127,6 +128,7 @@ namespace PhoinxBot
                     r.Text = "";
                     r.ReadOnly = true;
                     r.BackColor = System.Drawing.SystemColors.Control;
+                    r.Font = new System.Drawing.Font("Lucida Sans Unicode", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 
                     tab.Controls.Add(b);
                     tab.Controls.Add(t);
@@ -180,7 +182,7 @@ namespace PhoinxBot
 
             if (tab.Name == "main") { tag = Properties.Settings.Default.Username; }
 
-            if (query.Text.StartsWith("!") && tab.Name != "main")
+            if (tab.Name != "main" && query.Text.StartsWith("!"))
             {
                 bot.PrintToChatTab(query.Text, tag);
                 bot.ProcessCmds(query.Text, tag, bot.BotName());
@@ -189,6 +191,7 @@ namespace PhoinxBot
             {
                 if (tag == Properties.Settings.Default.Username)
                 {
+                    query = (System.Windows.Forms.TextBox)tab.Controls[2];
                     bot.SendMessage(query.Text);  //send message to server
                 }
                 else
@@ -226,6 +229,7 @@ namespace PhoinxBot
             {
                 if (form == "")
                 {
+                    this.txtTerminal.SelectionFont = this.txtTerminal.Font;
                     this.txtTerminal.AppendText(text);
                     this.txtTerminal.ScrollToCaret();
                 }
@@ -263,6 +267,15 @@ namespace PhoinxBot
             {
                 // The Send button on the irc.twitch.tv doesn't seem to work...not sure what sending commands to irc.twitch.tv channel is meant to do...
                 btnSend.PerformClick();
+            }
+        }
+
+        private void TimeoutPeriodTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                 Properties.Settings.Default.TimeoutPeriod = TimeoutPeriodTextBox.Text;
+                 Properties.Settings.Default.Save();
             }
         }
    }

@@ -129,4 +129,7 @@ Blacklist	Ban / timeout people writing certain strings
 !blist remove &lt;text&gt;	Removes a text from blacklist
 !blist show	Shows all the blacklisted texts</value>
   </data>
+  <metadata name="GeneralToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
 </root>

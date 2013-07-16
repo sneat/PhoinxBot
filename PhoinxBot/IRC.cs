@@ -222,7 +222,7 @@ namespace PhoinxBot
                             if (antiSpoil[_channel] && spoilers.IsMatch(_message))
                             {
                                 Console.WriteLine("Spoiler by " + _nick);
-                                SendMessage("PRIVMSG " + _channel + " :/timeout " + _nick + " 1");
+                                SendMessage("PRIVMSG " + _channel + " :/timeout " + _nick + " " + Properties.Settings.Default.TimeoutPeriod);
                                 SendMessage("PRIVMSG " + _channel + " :" + _nick + " no spoilers pls!");
                             }
                             */
@@ -230,16 +230,18 @@ namespace PhoinxBot
                             //Check blacklist
                             foreach(KeyValuePair<string, int> x in blackList[_channel])
                             {
-                                if (_message.Contains(x.Key))
+                                if (_message.Contains(x.Key) || _message.ToLower().Contains(x.Key.ToLower()))
                                 {
                                     if (x.Value == 1)
                                     {
                                         SendMessage("PRIVMSG " + _channel + " :/ban " + _nick);
-                                        SendMessage("PRIVMSG " + _channel + " :" + _nick + " received ban for blacklisted message");
+                                        Console.WriteLine("Banning {0} because of banned word: {1}", _nick, _message);
+                                        //SendMessage("PRIVMSG " + _channel + " :" + _nick + " received ban for blacklisted message");
                                     }
                                     else
                                     {
-                                        SendMessage("PRIVMSG " + _channel + " :/timeout " + _nick + " 1");
+                                        SendMessage("PRIVMSG " + _channel + " :/timeout " + _nick + " " + Properties.Settings.Default.TimeoutPeriod);
+                                        Console.WriteLine("Timing out {0} for {1}seconds because of banned word: {2}", _nick, Properties.Settings.Default.TimeoutPeriod, _message);
                                         //SendMessage("PRIVMSG " + _channel + " :" + _nick + " received 5 minute timeout for blacklisted message");
                                     }
                                 }
@@ -454,6 +456,10 @@ namespace PhoinxBot
 
         private void Cmd_Blist(string _message, string _channel, string _nick)
         {
+            if (!_channel.StartsWith("#"))
+            {
+                _channel = "#" + _channel;
+            }
             //Blacklists certain words
             if (isOp(_channel, _nick))
             {
@@ -484,48 +490,58 @@ namespace PhoinxBot
                         {
                             _btext = cmd[1];
                         }
-
-                        //Check if blacklist already exists
-                        bool _xist = false;
-                        using (SQLiteConnection dbCon = new SQLiteConnection("Data Source=Database.sqlite;Version=3;"))
+                        //Check to see if we can lowercase this string
+                        string sOut = Encoding.ASCII.GetString(Encoding.ASCII.GetBytes(_btext));
+                        if (_btext == sOut)
                         {
-                            dbCon.Open();
-                            string qSelect = "SELECT * FROM blacklist WHERE text = '" + _btext + "' AND channel = '" + _channel + "'";
-                            SQLiteCommand command = new SQLiteCommand(qSelect, dbCon);
-                            SQLiteDataReader reader = command.ExecuteReader();
-                            while (reader.Read() && _xist == false)
+                            _btext = _btext.ToLower();
+                        }
+
+                        if (_btext.Length > 0)
+                        {
+
+                            //Check if blacklist already exists
+                            bool _xist = false;
+                            using (SQLiteConnection dbCon = new SQLiteConnection("Data Source=Database.sqlite;Version=3;"))
                             {
-                                _xist = true;
+                                dbCon.Open();
+                                string qSelect = "SELECT * FROM blacklist WHERE text = '" + _btext + "' AND channel = '" + _channel + "'";
+                                SQLiteCommand command = new SQLiteCommand(qSelect, dbCon);
+                                SQLiteDataReader reader = command.ExecuteReader();
+                                while (reader.Read() && _xist == false)
+                                {
+                                    _xist = true;
+                                }
+
+                                //Either add or remove it
+                                if (!_xist && cmd[0] == "add")
+                                {
+                                    string qUpdate = "INSERT INTO blacklist (type, text, channel) VALUES ('" + _btype + "', '" + _btext + "', '" + _channel + "')";
+                                    Console.WriteLine("Blacklist added! (" + _btext + ")");
+
+                                    SQLiteCommand cUpdate = new SQLiteCommand(qUpdate, dbCon);
+                                    cUpdate.ExecuteNonQuery();
+
+                                    blackList[_channel].Add(_btext, Convert.ToInt16(_btype));
+
+                                    //SendMessage("PRIVMSG " + _channel + " :Blacklist for " + _btext + " added!");
+                                    PrintToChatTab("Blacklist for " + _btext + " added!", _channel);
+                                }
+                                else if (_xist && cmd[0] == "remove")
+                                {
+                                    string qUpdate = "DELETE FROM blacklist WHERE text = '" + _btext + "' AND channel = '" + _channel + "'";
+                                    //Console.WriteLine("Blacklist removed! (" + _btext + ")");
+
+                                    SQLiteCommand cUpdate = new SQLiteCommand(qUpdate, dbCon);
+                                    cUpdate.ExecuteNonQuery();
+
+                                    blackList[_channel].Remove(_btext);
+
+                                    //SendMessage("PRIVMSG " + _channel + " :Blacklist for " + _btext + " removed!");
+                                    PrintToChatTab("Blacklist for " + _btext + " removed!", _channel);
+                                }
+                                dbCon.Close();
                             }
-
-                            //Either add or remove it
-                            if (!_xist && cmd[0] == "add")
-                            {
-                                string qUpdate = "INSERT INTO blacklist (type, text, channel) VALUES ('" + _btype + "', '" + _btext + "', '" + _channel + "')";
-                                //Console.WriteLine("Blacklist added! (" + _btext + ")");
-
-                                SQLiteCommand cUpdate = new SQLiteCommand(qUpdate, dbCon);
-                                cUpdate.ExecuteNonQuery();
-
-                                blackList['#'+_channel].Add(_btext, Convert.ToInt16(_btype));
-
-                                //SendMessage("PRIVMSG " + _channel + " :Blacklist for " + _btext + " added!");
-                                PrintToChatTab("Blacklist for " + _btext + " added!", _channel);
-                            }
-                            else if (_xist && cmd[0] == "remove")
-                            {
-                                string qUpdate = "DELETE FROM blacklist WHERE text = '" + _btext + "' AND channel = '" + _channel + "'";
-                                //Console.WriteLine("Blacklist removed! (" + _btext + ")");
-
-                                SQLiteCommand cUpdate = new SQLiteCommand(qUpdate, dbCon);
-                                cUpdate.ExecuteNonQuery();
-
-                                blackList['#'+_channel].Remove(_btext);
-
-                                //SendMessage("PRIVMSG " + _channel + " :Blacklist for " + _btext + " removed!");
-                                PrintToChatTab("Blacklist for " + _btext + " removed!", _channel);
-                            }
-                            dbCon.Close();
                         }
                     }
                 }
