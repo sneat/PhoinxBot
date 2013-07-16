@@ -174,17 +174,19 @@ namespace PhoinxBot
 
             if (query.Text.StartsWith("!") && tab.Name != "main")
             {
+                bot.PrintToChatTab(query.Text, tag);
                 bot.ProcessCmds(query.Text, tag, bot.BotName());
             }
             else
             {
                 if (tag == Properties.Settings.Default.Username)
                 {
-                    bot.SendMessage(query.Text);
+                    bot.SendMessage(query.Text);  //send message to server
                 }
                 else
                 {
-                    bot.SendMessage("PRIVMSG #" + tag + " :" + query.Text);
+                    bot.PrintToChatTab(query.Text, tag, bot.BotName());  //display message in chat tab
+                    bot.SendMessage("PRIVMSG #" + tag + " :" + query.Text); //send message to channel
                 }
             }
 

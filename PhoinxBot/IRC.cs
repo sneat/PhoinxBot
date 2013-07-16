@@ -217,6 +217,7 @@ namespace PhoinxBot
                         //Check all messages for blacklisted commands (and ascii art-crap) and spoilers (if enabled)
                         if(_channel.Contains('#'))
                         {
+                            /*
                             //Antispoiler
                             if (antiSpoil[_channel] && spoilers.IsMatch(_message))
                             {
@@ -224,7 +225,8 @@ namespace PhoinxBot
                                 SendMessage("PRIVMSG " + _channel + " :/timeout " + _nick + " 1");
                                 SendMessage("PRIVMSG " + _channel + " :" + _nick + " no spoilers pls!");
                             }
-                            
+                            */
+
                             //Check blacklist
                             foreach(KeyValuePair<string, int> x in blackList[_channel])
                             {
@@ -238,7 +240,7 @@ namespace PhoinxBot
                                     else
                                     {
                                         SendMessage("PRIVMSG " + _channel + " :/timeout " + _nick + " 1");
-                                        //SendMessage("PRIVMSG " + _channel + " :" + _nick + " reveiced 1s timeout for blacklisted message");
+                                        //SendMessage("PRIVMSG " + _channel + " :" + _nick + " received 5 minute timeout for blacklisted message");
                                     }
                                 }
                             }
@@ -264,8 +266,15 @@ namespace PhoinxBot
 
         public void ProcessCmds(string _message, string _channel, string _nick)
         {
+            //if (_message.StartsWith("!cmd")) Cmd_Custom(_message, _channel, _nick);
+            if (_message.StartsWith("!permit")) Cmd_Permit(_message, _channel, _nick);
+            if (_message.StartsWith("!blist")) Cmd_Blist(_message, _channel, _nick);
+        }
+
+        private void Cmd_Custom(string _message, string _channel, string _nick)
+        {
             //Custom commands
-            if (_message.StartsWith("!cmd") && isOp(_channel, _nick))
+            if (isOp(_channel, _nick))
             {
                 string[] cmd = _message.Replace("!cmd", "").TrimStart(' ').TrimEnd(' ').Split(' ');
                 if (cmd.Length > 1)
@@ -319,9 +328,12 @@ namespace PhoinxBot
                     }
                 }
             }
-
+        }
+        
+        private void Cmd_Poll(string _message, string _channel, string _nick)
+        {
             //Poll commands
-            else if (_message.StartsWith("!poll") && isOp(_channel, _nick))
+            if (isOp(_channel, _nick))
             {
                 string[] cmd = _message.Replace("!poll", "").TrimStart(' ').TrimEnd(' ').Split(' ');
                 //If you just enter !poll it posts the current status (not running or cmds to vote with)
@@ -434,9 +446,16 @@ namespace PhoinxBot
                     }
                 }
             }
+        }
+        
+//        template function definition to copy paste        
+//        private void Cmd_Blist(string _message, string _channel, string _nick)
+//        private void Cmd_Blist(string _message, string _channel, string _nick)
 
+        private void Cmd_Blist(string _message, string _channel, string _nick)
+        {
             //Blacklists certain words
-            else if (_message.StartsWith("!blist") && isOp(_channel, _nick))
+            if (isOp(_channel, _nick))
             {
                 string[] cmd = _message.Replace("!blist", "").TrimStart(' ').TrimEnd(' ').Split(' ');
                 if (cmd.Length > 1)
@@ -483,26 +502,28 @@ namespace PhoinxBot
                             if (!_xist && cmd[0] == "add")
                             {
                                 string qUpdate = "INSERT INTO blacklist (type, text, channel) VALUES ('" + _btype + "', '" + _btext + "', '" + _channel + "')";
-                                Console.WriteLine("Blacklist added! (" + _btext + ")");
+                                //Console.WriteLine("Blacklist added! (" + _btext + ")");
 
                                 SQLiteCommand cUpdate = new SQLiteCommand(qUpdate, dbCon);
                                 cUpdate.ExecuteNonQuery();
 
-                                blackList[_channel].Add(_btext, Convert.ToInt16(_btype));
+                                blackList['#'+_channel].Add(_btext, Convert.ToInt16(_btype));
 
-                                SendMessage("PRIVMSG " + _channel + " :Blacklist for " + _btext + " added!");
+                                //SendMessage("PRIVMSG " + _channel + " :Blacklist for " + _btext + " added!");
+                                PrintToChatTab("Blacklist for " + _btext + " added!", _channel);
                             }
                             else if (_xist && cmd[0] == "remove")
                             {
                                 string qUpdate = "DELETE FROM blacklist WHERE text = '" + _btext + "' AND channel = '" + _channel + "'";
-                                Console.WriteLine("Blacklist removed! (" + _btext + ")");
+                                //Console.WriteLine("Blacklist removed! (" + _btext + ")");
 
                                 SQLiteCommand cUpdate = new SQLiteCommand(qUpdate, dbCon);
                                 cUpdate.ExecuteNonQuery();
 
-                                blackList[_channel].Remove(_btext);
+                                blackList['#'+_channel].Remove(_btext);
 
-                                SendMessage("PRIVMSG " + _channel + " :Blacklist for " + _btext + " removed!");
+                                //SendMessage("PRIVMSG " + _channel + " :Blacklist for " + _btext + " removed!");
+                                PrintToChatTab("Blacklist for " + _btext + " removed!", _channel);
                             }
                             dbCon.Close();
                         }
@@ -527,10 +548,100 @@ namespace PhoinxBot
                     }
 
                     blist = blist.TrimEnd(' ').TrimEnd(',');
-                    SendMessage("PRIVMSG " + _channel + " :Blacklist is: " + blist);
+
+                    // *todo* change this to a debug message
+                    //SendMessage("PRIVMSG " + _channel + " :Blacklist is: " + blist);
+                    PrintToChatTab("Blacklist is: " + blist, _channel);
+
                 }
             }
 
+        }
+       
+        private void Cmd_Permit(string _message, string _channel, string _nick)
+        {
+            //Adds a new op to the bot (can use all the above commands) - this can only be used by the channel owner
+            if (isOwner(_channel, _nick) || _nick == BotName())
+            {
+                string[] cmd = _message.Replace("!permit", "").TrimStart(' ').TrimEnd(' ').Split(' ');
+                Console.WriteLine(cmd.Length);
+                //List command doesn't work... throws exception
+                if (cmd[0] == "list")
+                {
+                    PrintToChatTab("Command !permit list not implemented yet", _channel);
+                    /*
+                    //Displays all permitted operators
+                    string permitlist = "";
+                    using (SQLiteConnection dbCon = new SQLiteConnection("Data Source=Database.sqlite;Version=3;"))
+                    {
+                        dbCon.Open();
+                        string qSelect = "SELECT * FROM permits WHERE channel = '#" + _channel + "'";
+                        SQLiteCommand commandlist = new SQLiteCommand(qSelect, dbCon);
+                        SQLiteDataReader reader = commandlist.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            permitlist += "\"" + reader["text"] + "\", ";
+                        }
+                        dbCon.Close();
+                    }
+
+                    permitlist = permitlist.TrimEnd(' ').TrimEnd(',');
+
+                    //SendMessage("PRIVMSG " + _channel + " :Blacklist is: " + blist);
+                    PrintToChat(" : OP List is: " + permitlist, _channel);
+                    */
+                }
+
+                if (cmd.Length == 2)
+                {
+                    //Check if user exists as mod
+                    bool _xist = false;
+                    using (SQLiteConnection dbCon = new SQLiteConnection("Data Source=Database.sqlite;Version=3;"))
+                    {
+                        dbCon.Open();
+                        string qSelect = "SELECT * FROM permits WHERE user = '" + cmd[1] + "' AND channel = '" + _channel + "'";
+                        SQLiteCommand command = new SQLiteCommand(qSelect, dbCon);
+                        SQLiteDataReader reader = command.ExecuteReader();
+                        while (reader.Read() && _xist == false)
+                        {
+                            _xist = true;
+                            PrintToChatTab("User is currently OP: " + cmd[1], _channel);
+                        }
+
+                        //Either add or remove him
+                        if (_xist && cmd[0] == "remove")
+                        {
+                            string qUpdate = "DELETE FROM permits WHERE user = '" + cmd[1] + "' AND channel = '" + _channel + "'";
+
+                            SQLiteCommand cUpdate = new SQLiteCommand(qUpdate, dbCon);
+                            cUpdate.ExecuteNonQuery();
+                            PrintToChatTab("User Deleted: " + cmd[1], _channel);
+                        }
+                        else
+                        {
+                            string _username;
+                            if (!_xist && cmd[0] == "add")
+                            {
+                                _username = cmd[1];
+                                string qUpdate = "INSERT INTO permits (user, channel) VALUES ('" + _username + "', '" + _channel + "')";
+
+                                SQLiteCommand cUpdate = new SQLiteCommand(qUpdate, dbCon);
+                                cUpdate.ExecuteNonQuery();
+                                PrintToChatTab("User Added: " + _username, _channel);
+
+                            }
+                        }
+                        dbCon.Close();
+                    }
+                }
+
+            }
+        }
+
+        // Blocked funcitons
+        private void Cmd_Disabled(string _message, string _channel, string _nick)
+        {
+            /*
             //Antispoiler command - timeouts people posting spoilers
             else if (_message.StartsWith("!antispoil") && isOp(_channel, _nick))
             {
@@ -548,59 +659,6 @@ namespace PhoinxBot
 
             }
 
-            //Adds a new op to the bot (can use all the above commands) - this can only be used by the channel owner
-            else if (_message.StartsWith("!permit") && isOwner(_channel, _nick))
-            {
-                string[] cmd = _message.Replace("!permit", "").TrimStart(' ').TrimEnd(' ').Split(' ');
-                Console.WriteLine(cmd.Length);
-                if (cmd.Length == 2)
-                {
-                    //Check if user exists as mod
-                    bool _xist = false;
-                    using (SQLiteConnection dbCon = new SQLiteConnection("Data Source=Database.sqlite;Version=3;"))
-                    {
-                        dbCon.Open();
-                        string qSelect = "SELECT * FROM permits WHERE user = '" + cmd[1] + "' AND channel = '" + _channel + "'";
-                        SQLiteCommand command = new SQLiteCommand(qSelect, dbCon);
-                        SQLiteDataReader reader = command.ExecuteReader();
-                        while (reader.Read() && _xist == false)
-                        {
-                            _xist = true;
-                        }
-
-                        //Either add or remove him
-                        if (_xist && cmd[0] == "remove")
-                        {
-                            string qUpdate = "DELETE FROM permits WHERE user = '" + cmd[1] + "' AND channel = '" + _channel + "'";
-                            Console.WriteLine("USER DELETED! (" + cmd[1] + ")");
-
-                            SQLiteCommand cUpdate = new SQLiteCommand(qUpdate, dbCon);
-                            cUpdate.ExecuteNonQuery();
-                        }
-                        else
-                        {
-                            string username;
-                            if (!_xist && cmd[0] == "add")
-                            {
-                                username = cmd[1];
-                            }
-                            else
-                            {
-                                username = cmd[0];
-                            }
-
-                            string qUpdate = "INSERT INTO permits (user, channel) VALUES ('" + username + "', '" + _channel + "')";
-                            Console.WriteLine("USER ADDED! (" + username + ")");
-
-                            SQLiteCommand cUpdate = new SQLiteCommand(qUpdate, dbCon);
-                            cUpdate.ExecuteNonQuery();
-                        }
- 
-                        dbCon.Close();
-                    }
-                }
-
-            }
 
             //Displays all the custom commands created with !cmd
             else if (_message.StartsWith("!commands"))
@@ -680,7 +738,12 @@ namespace PhoinxBot
                     }
                 }
             }
+        */ 
         }
 
+        public void PrintToChatTab(string _message, string _channel, string _nick = "*BOT_ECHO*")
+        {
+            Program.mainForm.AddLine(_channel, "<" + DateTime.Now.ToString("HH:mm:ss") + "> <" + _nick + "> " + _message);
+        }
     }
 }
