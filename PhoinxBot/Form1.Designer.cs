@@ -38,7 +38,7 @@
             this.TextBoxCmdList = new System.Windows.Forms.RichTextBox();
             this.UsernameTextBox = new System.Windows.Forms.TextBox();
             this.PasswordTextBox = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.UsernamePasswordLabel = new System.Windows.Forms.Label();
             this.ConnectIRCButton = new System.Windows.Forms.Button();
             this.main.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -118,31 +118,32 @@
             // 
             // UsernameTextBox
             // 
-            this.UsernameTextBox.Location = new System.Drawing.Point(376, 7);
+            this.UsernameTextBox.Location = new System.Drawing.Point(386, 7);
             this.UsernameTextBox.Name = "UsernameTextBox";
             this.UsernameTextBox.Size = new System.Drawing.Size(164, 20);
             this.UsernameTextBox.TabIndex = 1;
             // 
             // PasswordTextBox
             // 
-            this.PasswordTextBox.Location = new System.Drawing.Point(546, 7);
+            this.PasswordTextBox.Location = new System.Drawing.Point(556, 7);
             this.PasswordTextBox.Name = "PasswordTextBox";
             this.PasswordTextBox.PasswordChar = '*';
             this.PasswordTextBox.Size = new System.Drawing.Size(124, 20);
             this.PasswordTextBox.TabIndex = 2;
+            this.PasswordTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PasswordTextBox_KeyDown);
             // 
-            // label1
+            // UsernamePasswordLabel
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(209, 10);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(161, 13);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Twitch.TV Username/Password:";
+            this.UsernamePasswordLabel.AutoSize = true;
+            this.UsernamePasswordLabel.Location = new System.Drawing.Point(219, 10);
+            this.UsernamePasswordLabel.Name = "UsernamePasswordLabel";
+            this.UsernamePasswordLabel.Size = new System.Drawing.Size(161, 13);
+            this.UsernamePasswordLabel.TabIndex = 3;
+            this.UsernamePasswordLabel.Text = "Twitch.TV Username/Password:";
             // 
             // ConnectIRCButton
             // 
-            this.ConnectIRCButton.Location = new System.Drawing.Point(676, 7);
+            this.ConnectIRCButton.Location = new System.Drawing.Point(686, 5);
             this.ConnectIRCButton.Name = "ConnectIRCButton";
             this.ConnectIRCButton.Size = new System.Drawing.Size(75, 23);
             this.ConnectIRCButton.TabIndex = 3;
@@ -156,7 +157,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(776, 756);
             this.Controls.Add(this.ConnectIRCButton);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.UsernamePasswordLabel);
             this.Controls.Add(this.PasswordTextBox);
             this.Controls.Add(this.UsernameTextBox);
             this.Controls.Add(this.tabs);
@@ -182,7 +183,7 @@
         private System.Windows.Forms.RichTextBox TextBoxCmdList;
         private System.Windows.Forms.TextBox UsernameTextBox;
         private System.Windows.Forms.TextBox PasswordTextBox;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label UsernamePasswordLabel;
         private System.Windows.Forms.Button ConnectIRCButton;
     }
 }

@@ -29,6 +29,8 @@ namespace PhoinxBot
         {
             Properties.Settings.Default.Username = UsernameTextBox.Text;
             Properties.Settings.Default.Password = PasswordTextBox.Text;
+            Properties.Settings.Default.Save();
+            UsernamePasswordLabel.Visible = false;
             InitDBData();
             InitIRC();
             InitTabs();
@@ -238,6 +240,14 @@ namespace PhoinxBot
                     ((System.Windows.Forms.RichTextBox)tab.Controls["terminal[" + name + "]"]).AppendText(text);
                     ((System.Windows.Forms.RichTextBox)tab.Controls["terminal[" + name + "]"]).ScrollToCaret();
                 }
+            }
+        }
+
+        private void PasswordTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                ConnectIRCButton_Click(new object(), new EventArgs());
             }
         }
    }
