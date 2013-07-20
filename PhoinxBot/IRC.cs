@@ -236,25 +236,27 @@ namespace PhoinxBot
 
                             bool blacklistmatched = false;
                             //Check blacklist
-                            foreach(KeyValuePair<string, int> x in blackList[_channel])
+                            foreach (KeyValuePair<string, Dictionary<string, int>> y in blackList)
                             {
-                                if (_message.Contains(x.Key) || _message.ToLower().Contains(x.Key.ToLower()))
+                                foreach (KeyValuePair<string, int> x in y.Value)
                                 {
-                                    if (x.Value == 1 && !blacklistmatched)
+                                    if (!blacklistmatched && (_message.Contains(x.Key) || _message.ToLower().Contains(x.Key.ToLower())))
                                     {
                                         blacklistmatched = true;
-                                        SendMessage("PRIVMSG " + _channel + " :/ban " + _nick);
-                                        Console.WriteLine("Banning {0} because of banned word: {1}", _nick, _message);
-                                        //SendMessage("PRIVMSG " + _channel + " :" + _nick + " received ban for blacklisted message");
-                                    }
-                                    else {
-                                        if (!blacklistmatched) {
-                                                blacklistmatched = true;
-                                                SendMessage("PRIVMSG " + _channel + " :/timeout " + _nick + " " + Properties.Settings.Default.TimeoutPeriod);
-                                                Console.WriteLine("Timing out {0} for {1}seconds because of banned word: {2}", _nick, Properties.Settings.Default.TimeoutPeriod, _message);
-                                                //SendMessage("PRIVMSG " + _channel + " :" + _nick + " received 5 minute timeout for blacklisted message");
-                                            }
+                                        if (x.Value == 1)
+                                        {
+                                            SendMessage("PRIVMSG " + _channel + " :/ban " + _nick);
+                                            Console.WriteLine("Banning {0} because of banned word: {1}", _nick, _message);
+                                            //SendMessage("PRIVMSG " + _channel + " :" + _nick + " received ban for blacklisted message");
+                                        }
+                                        else
+                                        {
+                                            SendMessage("PRIVMSG " + _channel + " :/timeout " + _nick + " " + Properties.Settings.Default.TimeoutPeriod);
+                                            Console.WriteLine("Timing out {0} for {1}seconds because of banned word: {2}", _nick, Properties.Settings.Default.TimeoutPeriod, _message);
+                                            //SendMessage("PRIVMSG " + _channel + " :" + _nick + " received 5 minute timeout for blacklisted message");
+                                        }
 
+                                        break; // Don't keep looping
                                     }
                                 }
                             }
