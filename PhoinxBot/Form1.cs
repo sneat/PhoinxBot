@@ -33,8 +33,8 @@ namespace PhoinxBot
             Properties.Settings.Default.Save();
             UsernamePasswordLabel.Visible = false;
             InitDBData();
-            InitIRC();
             InitTabs();
+            InitIRC();
             //AddChannel("your_channel_here");
             FillCmdListTab();
         }

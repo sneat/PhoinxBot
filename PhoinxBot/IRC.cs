@@ -35,45 +35,52 @@ namespace PhoinxBot
         public IRC()
         {
             //Opens connection to the twitch IRC
-            Client = new TcpClient("irc.twitch.tv", 6667);
-            NwStream = Client.GetStream();
-            Reader = new StreamReader(NwStream, Encoding.GetEncoding("iso8859-1"));
-            Writer = new StreamWriter(NwStream, Encoding.GetEncoding("iso8859-1"));
-
-            //Starts a thread that reads all data from IRC
-            listen = new Thread(new ThreadStart(Listen));
-            listen.Start();
-
-            //Special vars initialized
-            pollOpen = new Dictionary<string,bool>();
-            pollVotes = new Dictionary<string, Dictionary<string, Dictionary<string, int>>>();
-            antiSpoil = new Dictionary<string, bool>();
-            blackList = new Dictionary<string, Dictionary<string, int>>();
-
-            //Writes userdata to twitch - remember your username and password!
-            Writer.WriteLine("USER " + Properties.Settings.Default.Username + "tmi twitch :" + Properties.Settings.Default.Username);
-            Writer.Flush();
-            Writer.WriteLine("PASS " + Properties.Settings.Default.Password);
-            Writer.Flush();
-            Writer.WriteLine("NICK "+ Properties.Settings.Default.Username);
-            Writer.Flush();
-
-            //Regex to check for spoilers initialized
-            spoilers = new Regex("^(.*)[0-9]+[_ ]*[-:][_ ]*[0-9](.*)$");
-
-            //Initializes all channels
-            using (SQLiteConnection dbCon = new SQLiteConnection("Data Source=Database.sqlite;Version=3;"))
+            try
             {
-                dbCon.Open();
-                string query = "SELECT name FROM channels ORDER BY name ASC";
-                SQLiteCommand command = new SQLiteCommand(query, dbCon);
-                SQLiteDataReader reader = command.ExecuteReader();
+                Client = new TcpClient("irc.twitch.tv", 6667);
+                NwStream = Client.GetStream();
+                Reader = new StreamReader(NwStream, Encoding.GetEncoding("iso8859-1"));
+                Writer = new StreamWriter(NwStream, Encoding.GetEncoding("iso8859-1"));
 
-                while (reader.Read())
+                //Starts a thread that reads all data from IRC
+                listen = new Thread(new ThreadStart(Listen));
+                listen.Start();
+
+                //Special vars initialized
+                pollOpen = new Dictionary<string, bool>();
+                pollVotes = new Dictionary<string, Dictionary<string, Dictionary<string, int>>>();
+                antiSpoil = new Dictionary<string, bool>();
+                blackList = new Dictionary<string, Dictionary<string, int>>();
+
+                //Writes userdata to twitch - remember your username and password!
+                Writer.WriteLine("USER " + Properties.Settings.Default.Username + "tmi twitch :" + Properties.Settings.Default.Username);
+                Writer.Flush();
+                Writer.WriteLine("PASS " + Properties.Settings.Default.Password);
+                Writer.Flush();
+                Writer.WriteLine("NICK " + Properties.Settings.Default.Username);
+                Writer.Flush();
+
+                //Regex to check for spoilers initialized
+                spoilers = new Regex("^(.*)[0-9]+[_ ]*[-:][_ ]*[0-9](.*)$");
+
+                //Initializes all channels
+                using (SQLiteConnection dbCon = new SQLiteConnection("Data Source=Database.sqlite;Version=3;"))
                 {
-                    InitChan((string)reader["name"]);
+                    dbCon.Open();
+                    string query = "SELECT name FROM channels ORDER BY name ASC";
+                    SQLiteCommand command = new SQLiteCommand(query, dbCon);
+                    SQLiteDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        InitChan((string)reader["name"]);
+                    }
+                    dbCon.Close();
                 }
-                dbCon.Close();
+            }
+            catch
+            {
+                Console.WriteLine("Could not connect to irc.twitch.tv");
             }
         }
 
@@ -227,22 +234,27 @@ namespace PhoinxBot
                             }
                             */
 
+                            bool blacklistmatched = false;
                             //Check blacklist
                             foreach(KeyValuePair<string, int> x in blackList[_channel])
                             {
                                 if (_message.Contains(x.Key) || _message.ToLower().Contains(x.Key.ToLower()))
                                 {
-                                    if (x.Value == 1)
+                                    if (x.Value == 1 && !blacklistmatched)
                                     {
+                                        blacklistmatched = true;
                                         SendMessage("PRIVMSG " + _channel + " :/ban " + _nick);
                                         Console.WriteLine("Banning {0} because of banned word: {1}", _nick, _message);
                                         //SendMessage("PRIVMSG " + _channel + " :" + _nick + " received ban for blacklisted message");
                                     }
-                                    else
-                                    {
-                                        SendMessage("PRIVMSG " + _channel + " :/timeout " + _nick + " " + Properties.Settings.Default.TimeoutPeriod);
-                                        Console.WriteLine("Timing out {0} for {1}seconds because of banned word: {2}", _nick, Properties.Settings.Default.TimeoutPeriod, _message);
-                                        //SendMessage("PRIVMSG " + _channel + " :" + _nick + " received 5 minute timeout for blacklisted message");
+                                    else {
+                                        if (!blacklistmatched) {
+                                                blacklistmatched = true;
+                                                SendMessage("PRIVMSG " + _channel + " :/timeout " + _nick + " " + Properties.Settings.Default.TimeoutPeriod);
+                                                Console.WriteLine("Timing out {0} for {1}seconds because of banned word: {2}", _nick, Properties.Settings.Default.TimeoutPeriod, _message);
+                                                //SendMessage("PRIVMSG " + _channel + " :" + _nick + " received 5 minute timeout for blacklisted message");
+                                            }
+
                                     }
                                 }
                             }
