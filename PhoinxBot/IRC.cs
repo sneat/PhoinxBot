@@ -567,7 +567,8 @@ namespace PhoinxBot
                     using (SQLiteConnection dbCon = new SQLiteConnection("Data Source=Database.sqlite;Version=3;"))
                     {
                         dbCon.Open();
-                        string qSelect = "SELECT * FROM blacklist WHERE channel = '" + _channel + "'";
+                        //string qSelect = "SELECT * FROM blacklist WHERE channel = '" + _channel + "'";
+                        string qSelect = "SELECT * FROM blacklist";
                         SQLiteCommand command = new SQLiteCommand(qSelect, dbCon);
                         SQLiteDataReader reader = command.ExecuteReader();
                         while (reader.Read())
